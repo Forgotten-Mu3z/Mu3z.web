@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mu3z | Skript Developer</title>
+  <meta name="description" content="Mu3z is a Skript developer for Minecraft PvP servers, with work for NullifyFFA, EffectsFFA and Rascal PvP, plus Fortnite macros.">
+  <meta name="theme-color" content="#0e1110" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f3f5f4" media="(prefers-color-scheme: light)">
+  <meta property="og:title" content="Mu3z | Skript Developer">
+  <meta property="og:description" content="Skript developer for Minecraft PvP servers. NullifyFFA, EffectsFFA, Rascal PvP.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/icons/style.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply a saved theme before first paint to avoid a flash.
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body data-discord="mu3z">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="logo" href="#top" aria-label="Mu3z, back to top">Mu3z</a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#servers">Servers</a>
+        <a href="#skript">Skript</a>
+        <a href="#macros">Macros</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle light and dark mode">
+          <i class="ph ph-sun" aria-hidden="true"></i>
+        </button>
+        <a class="btn btn--primary btn--sm" href="#contact">Message me</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow reveal">Skript developer</p>
+          <h1 class="hero__title reveal">I script <em>PvP servers.</em></h1>
+          <p class="hero__sub reveal">Arenas, kits, stats and staff tools in Skript, built for NullifyFFA, EffectsFFA and Rascal PvP.</p>
+          <div class="hero__ctas reveal">
+            <a class="btn btn--primary" href="#contact"><i class="ph ph-discord-logo" aria-hidden="true"></i>Message me</a>
+            <a class="btn btn--ghost" href="#servers">See servers</a>
+          </div>
+        </div>
+
+        <figure class="code reveal" aria-label="Example Skript code: a simple FFA join command and kill tracker">
+          <figcaption class="code__file"><i class="ph ph-code-block" aria-hidden="true"></i>ffa.sk</figcaption>
+<pre class="code__body"><code><span class="ln"><span class="kw">command</span> <span class="fn">/ffa</span>:</span>
+<span class="ln">    <span class="kw">permission</span>: ffa.join</span>
+<span class="ln">    <span class="kw">trigger</span>:</span>
+<span class="ln">        <span class="kw">if</span> <span class="var">{ffa::players::*}</span> contains player:</span>
+<span class="ln">            send <span class="str">"&amp;cYou are already in the arena."</span></span>
+<span class="ln">            <span class="kw">stop</span></span>
+<span class="ln">        add player to <span class="var">{ffa::players::*}</span></span>
+<span class="ln">        clear player's inventory</span>
+<span class="ln">        give player diamond sword of sharpness <span class="num">2</span></span>
+<span class="ln">        teleport player to <span class="var">{ffa::spawn}</span></span>
+<span class="ln"> </span>
+<span class="ln"><span class="kw">on</span> <span class="fn">death of player</span>:</span>
+<span class="ln">    attacker is a player</span>
+<span class="ln">    add <span class="num">1</span> to <span class="var">{kills::%attacker's uuid%}</span></span>
+<span class="ln">    send action bar <span class="str">"&amp;a+1 kill"</span> to attacker</span></code></pre>
+        </figure>
+      </div>
+    </section>
+
+    <div class="marquee" aria-label="Tools I work with">
+      <div class="marquee__track">
+        <ul class="marquee__list">
+          <li>Skript</li><li>SkBee</li><li>skript-reflect</li><li>Paper</li><li>YAML configs</li><li>GUI menus</li><li>Scoreboards</li><li>Fortnite macros</li>
+        </ul>
+        <ul class="marquee__list" aria-hidden="true">
+          <li>Skript</li><li>SkBee</li><li>skript-reflect</li><li>Paper</li><li>YAML configs</li><li>GUI menus</li><li>Scoreboards</li><li>Fortnite macros</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="section" id="servers">
+      <div class="wrap">
+        <h2 class="section__title reveal">Servers I've worked for</h2>
+        <div class="bento">
+          <article class="tile tile--feature reveal">
+            <div class="mark" aria-hidden="true">N</div>
+            <div class="tile__body">
+              <h3>NullifyFFA</h3>
+              <p>Skript developer on a live FFA server. Gameplay scripts, arena logic and fixes shipped while players were online.</p>
+            </div>
+            <i class="ph ph-sword tile__icon" aria-hidden="true"></i>
+          </article>
+          <article class="tile tile--pattern reveal">
+            <div class="mark" aria-hidden="true">E</div>
+            <div class="tile__body">
+              <h3>EffectsFFA</h3>
+              <p>Effect-based FFA gameplay, kits and the commands that hold them together.</p>
+            </div>
+          </article>
+          <article class="tile tile--plain reveal">
+            <div class="mark" aria-hidden="true">R</div>
+            <div class="tile__body">
+              <h3>Rascal PvP</h3>
+              <p>PvP systems, stat tracking and quality-of-life features for players and staff.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skript">
+      <div class="wrap skills">
+        <h2 class="section__title reveal">What I build in Skript</h2>
+        <div class="skills__groups">
+          <div class="skills__group reveal">
+            <h3>Gameplay</h3>
+            <ul>
+              <li><i class="ph ph-crosshair" aria-hidden="true"></i><div><strong>FFA arenas and kits</strong><span>Join, spawn, reset and loadout logic.</span></div></li>
+              <li><i class="ph ph-lightning" aria-hidden="true"></i><div><strong>Abilities and effects</strong><span>Custom items, cooldowns and potion effects.</span></div></li>
+              <li><i class="ph ph-timer" aria-hidden="true"></i><div><strong>Events and streaks</strong><span>Kill streaks, bounties and timed events.</span></div></li>
+            </ul>
+          </div>
+          <div class="skills__group reveal">
+            <h3>Systems</h3>
+            <ul>
+              <li><i class="ph ph-chart-bar" aria-hidden="true"></i><div><strong>Stats and leaderboards</strong><span>Kills, deaths and K/D saved per player.</span></div></li>
+              <li><i class="ph ph-cursor-click" aria-hidden="true"></i><div><strong>GUI menus</strong><span>Shops, kit selectors and settings menus.</span></div></li>
+              <li><i class="ph ph-shield-check" aria-hidden="true"></i><div><strong>Staff tools</strong><span>Moderation commands, logs and permission checks.</span></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section macros" id="macros">
+      <div class="wrap macros__grid">
+        <div class="macros__copy">
+          <h2 class="section__title reveal">I also build Fortnite macros.</h2>
+          <p class="reveal">Edit and build binds tuned for timing and consistency, set up around your own keyboard and mouse.</p>
+        </div>
+        <div class="keys reveal" aria-label="Example key binds">
+          <kbd>F</kbd><kbd>G</kbd><kbd class="key--accent">Q</kbd><kbd>E</kbd>
+          <kbd class="key--wide">Shift</kbd><kbd>Mouse 4</kbd><kbd class="key--accent">Mouse 5</kbd>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact__inner">
+        <h2 class="contact__title reveal">Need a Skript dev for your server?</h2>
+        <p class="reveal">Message me on Discord with what you need and I'll get back to you.</p>
+        <div class="contact__handle reveal">
+          <i class="ph ph-discord-logo" aria-hidden="true"></i>
+          <span data-handle>mu3z</span>
+          <button class="btn btn--primary" type="button" data-copy>
+            <i class="ph ph-copy" aria-hidden="true"></i><span data-copy-label>Copy username</span>
+          </button>
+        </div>
+        <p class="contact__status" role="status" aria-live="polite" data-copy-status></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span class="logo logo--sm">Mu3z</span>
+      <span>&copy; <span data-year>2026</span> Mu3z</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
