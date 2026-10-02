@@ -355,7 +355,7 @@
     resetTimer = setTimeout(function () {
       copyBtn.classList.remove("is-done");
       copyBtn.querySelector(".ph").className = "ph ph-copy";
-      copyLabel.textContent = "Copy username";
+      copyLabel.textContent = "Copy Username";
     }, 2200);
   }
   function showFallback() {
