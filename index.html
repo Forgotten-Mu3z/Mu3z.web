@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mu3z | Skript Developer</title>
-  <meta name="description" content="Mu3z is a Skript developer for Minecraft PvP servers, with work for NullifyFFA, EffectsFFA and Rascal PvP, plus Fortnite macros.">
+  <title>Mu3z | Skript &amp; Java Developer</title>
+  <meta name="description" content="Mu3z is a Skript and Java developer for Minecraft PvP servers, with work for NullifyFFA, EffectsFFA and Rascal PvP, plus Fortnite macros.">
   <meta name="theme-color" content="#0e1110" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f3f5f4" media="(prefers-color-scheme: light)">
-  <meta property="og:title" content="Mu3z | Skript Developer">
-  <meta property="og:description" content="Skript developer for Minecraft PvP servers. NullifyFFA, EffectsFFA, Rascal PvP.">
+  <meta property="og:title" content="Mu3z | Skript &amp; Java Developer">
+  <meta property="og:description" content="Skript and Java developer for Minecraft PvP servers. NullifyFFA, EffectsFFA, Rascal PvP.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -16,10 +16,12 @@
   <link rel="stylesheet" href="assets/icons/style.css">
   <link rel="stylesheet" href="styles.css">
   <script>
-    // Apply a saved theme before first paint to avoid a flash.
+    // Apply a saved theme and accent color before first paint to avoid a flash.
     try {
       var t = localStorage.getItem("theme");
       if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      var a = localStorage.getItem("accent");
+      if (/^(green|blue|purple|orange|red|gold)$/.test(a)) document.documentElement.dataset.accent = a;
     } catch (e) {}
   </script>
 </head>
@@ -31,10 +33,23 @@
       <a class="logo" href="#top" aria-label="Mu3z, back to top">Mu3z</a>
       <nav class="nav__links" aria-label="Sections">
         <a href="#servers">Servers</a>
-        <a href="#skript">Skript</a>
+        <a href="#skills">Skills</a>
         <a href="#macros">Macros</a>
       </nav>
       <div class="nav__actions">
+        <div class="accent-picker">
+          <button class="icon-btn" type="button" data-accent-toggle aria-expanded="false" aria-controls="accent-menu" aria-label="Change accent color">
+            <i class="ph ph-palette" aria-hidden="true"></i>
+          </button>
+          <div class="accent-menu" id="accent-menu" role="radiogroup" aria-label="Accent color" hidden>
+            <button type="button" role="radio" class="swatch" data-accent="green" aria-label="Green" style="--sw: #5fd38d"></button>
+            <button type="button" role="radio" class="swatch" data-accent="blue" aria-label="Blue" style="--sw: #6aa8ff"></button>
+            <button type="button" role="radio" class="swatch" data-accent="purple" aria-label="Purple" style="--sw: #b48cff"></button>
+            <button type="button" role="radio" class="swatch" data-accent="orange" aria-label="Orange" style="--sw: #ff9f4a"></button>
+            <button type="button" role="radio" class="swatch" data-accent="red" aria-label="Red" style="--sw: #ff6b81"></button>
+            <button type="button" role="radio" class="swatch" data-accent="gold" aria-label="Gold" style="--sw: #f2c94c"></button>
+          </div>
+        </div>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle light and dark mode">
           <i class="ph ph-sun" aria-hidden="true"></i>
         </button>
@@ -47,17 +62,20 @@
     <section class="hero" id="top">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 class="hero__title reveal">I script <em>PvP servers.</em></h1>
-          <p class="hero__sub reveal">Arenas, kits, stats and staff tools in Skript, built for NullifyFFA, EffectsFFA and Rascal PvP.</p>
+          <h1 class="hero__title reveal">I code <em>PvP servers.</em></h1>
+          <p class="hero__sub reveal">Skript and Java developer for NullifyFFA, EffectsFFA and Rascal PvP. Arenas, kits, stats and staff tools.</p>
           <div class="hero__ctas reveal">
             <a class="btn btn--primary" href="#contact"><i class="ph ph-discord-logo" aria-hidden="true"></i>Message me</a>
             <a class="btn btn--ghost" href="#servers">See servers</a>
           </div>
         </div>
 
-        <figure class="code reveal" aria-label="Example Skript code: a simple FFA join command and kill tracker">
-          <figcaption class="code__file"><i class="ph ph-code-block" aria-hidden="true"></i>ffa.sk</figcaption>
-<pre class="code__body"><code><span class="ln"><span class="kw">command</span> <span class="fn">/ffa</span>:</span>
+        <figure class="code reveal" aria-label="Example code: an FFA kill tracker in Skript and in Java">
+          <div class="code__tabs" role="tablist" aria-label="Language">
+            <button type="button" role="tab" class="code__tab" id="tab-skript" aria-controls="code-skript" aria-selected="true"><i class="ph ph-code-block" aria-hidden="true"></i>ffa.sk</button>
+            <button type="button" role="tab" class="code__tab" id="tab-java" aria-controls="code-java" aria-selected="false" tabindex="-1"><i class="ph ph-coffee" aria-hidden="true"></i>KillListener.java</button>
+          </div>
+<pre class="code__body" role="tabpanel" id="code-skript" aria-labelledby="tab-skript" tabindex="0"><code><span class="ln"><span class="kw">command</span> <span class="fn">/ffa</span>:</span>
 <span class="ln">    <span class="kw">permission</span>: ffa.join</span>
 <span class="ln">    <span class="kw">trigger</span>:</span>
 <span class="ln">        <span class="kw">if</span> <span class="var">{ffa::players::*}</span> contains player:</span>
@@ -72,13 +90,29 @@
 <span class="ln">    attacker is a player</span>
 <span class="ln">    add <span class="num">1</span> to <span class="var">{kills::%attacker's uuid%}</span></span>
 <span class="ln">    send action bar <span class="str">"&amp;a+1 kill"</span> to attacker</span></code></pre>
+<pre class="code__body" role="tabpanel" id="code-java" aria-labelledby="tab-java" tabindex="0" hidden><code><span class="ln"><span class="kw">public final class</span> <span class="fn">KillListener</span> <span class="kw">implements</span> <span class="var">Listener</span> {</span>
+<span class="ln"> </span>
+<span class="ln">    <span class="kw">private final</span> <span class="var">Stats</span> stats;</span>
+<span class="ln"> </span>
+<span class="ln">    <span class="kw">public</span> <span class="fn">KillListener</span>(<span class="var">Stats</span> stats) {</span>
+<span class="ln">        <span class="kw">this</span>.stats = stats;</span>
+<span class="ln">    }</span>
+<span class="ln"> </span>
+<span class="ln">    <span class="str">@EventHandler</span></span>
+<span class="ln">    <span class="kw">public void</span> <span class="fn">onDeath</span>(<span class="var">PlayerDeathEvent</span> event) {</span>
+<span class="ln">        <span class="var">Player</span> killer = event.getEntity().getKiller();</span>
+<span class="ln">        <span class="kw">if</span> (killer == <span class="kw">null</span>) <span class="kw">return</span>;</span>
+<span class="ln">        stats.addKill(killer.getUniqueId());</span>
+<span class="ln">        killer.sendActionBar(text(<span class="str">"+1 kill"</span>, GREEN));</span>
+<span class="ln">    }</span>
+<span class="ln">}</span></code></pre>
         </figure>
       </div>
     </section>
 
     <div class="tools" aria-label="Tools I work with">
       <ul class="wrap tools__list">
-        <li>Skript</li><li>SkBee</li><li>skript-reflect</li><li>Paper</li><li>YAML configs</li><li>GUI menus</li><li>Scoreboards</li><li>Fortnite macros</li>
+        <li>Skript</li><li>Java</li><li>Paper API</li><li>SkBee</li><li>skript-reflect</li><li>YAML configs</li><li>GUI menus</li><li>Scoreboards</li><li>Fortnite macros</li>
       </ul>
     </div>
 
@@ -89,21 +123,24 @@
           <article class="tile tile--feature">
             <div class="mark" aria-hidden="true">N</div>
             <div class="tile__body">
+              <ul class="tags" aria-label="Languages"><li>Java</li><li>Skript</li></ul>
               <h3>NullifyFFA</h3>
-              <p>Skript developer on a live FFA server. Gameplay scripts, arena logic and fixes shipped while players were online.</p>
+              <p>Java and Skript developer on a live FFA server. Plugins, gameplay scripts, arena logic and fixes shipped while players were online.</p>
             </div>
             <i class="ph ph-sword tile__icon" aria-hidden="true"></i>
           </article>
           <article class="tile tile--pattern">
             <div class="mark" aria-hidden="true">E</div>
             <div class="tile__body">
+              <ul class="tags" aria-label="Languages"><li>Java</li><li>Skript</li></ul>
               <h3>EffectsFFA</h3>
-              <p>Effect-based FFA gameplay, kits and the commands that hold them together.</p>
+              <p>Java and Skript for effect-based FFA gameplay, kits and the commands that hold them together.</p>
             </div>
           </article>
           <article class="tile tile--plain">
             <div class="mark" aria-hidden="true">R</div>
             <div class="tile__body">
+              <ul class="tags" aria-label="Languages"><li>Skript</li></ul>
               <h3>Rascal PvP</h3>
               <p>PvP systems, stat tracking and quality-of-life features for players and staff.</p>
             </div>
@@ -112,9 +149,9 @@
       </div>
     </section>
 
-    <section class="section" id="skript">
+    <section class="section" id="skills">
       <div class="wrap skills">
-        <h2 class="section__title">What I build in Skript</h2>
+        <h2 class="section__title">What I build in Skript and Java</h2>
         <div class="skills__groups">
           <div class="skills__group">
             <h3>Gameplay</h3>
@@ -132,6 +169,14 @@
               <li><i class="ph ph-shield-check" aria-hidden="true"></i><div><strong>Staff tools</strong><span>Moderation commands, logs and permission checks.</span></div></li>
             </ul>
           </div>
+          <div class="skills__group">
+            <h3>Java plugins</h3>
+            <ul>
+              <li><i class="ph ph-plug" aria-hidden="true"></i><div><strong>Paper plugins</strong><span>Commands, event listeners and config files.</span></div></li>
+              <li><i class="ph ph-sword" aria-hidden="true"></i><div><strong>Custom mechanics</strong><span>Effects, abilities and combat changes in Java.</span></div></li>
+              <li><i class="ph ph-gauge" aria-hidden="true"></i><div><strong>Heavier features</strong><span>Systems that run faster as a plugin than a script.</span></div></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -140,7 +185,7 @@
       <div class="wrap macros__grid">
         <div class="macros__copy">
           <h2 class="section__title">I also build Fortnite macros.</h2>
-          <p >Edit and build binds tuned for timing and consistency, set up around your own keyboard and mouse.</p>
+          <p>Edit and build binds tuned for timing and consistency, set up around your own keyboard and mouse.</p>
         </div>
         <div class="keys" aria-label="Example key binds">
           <kbd>F</kbd><kbd>G</kbd><kbd class="key--accent">Q</kbd><kbd>E</kbd>
@@ -151,8 +196,8 @@
 
     <section class="contact" id="contact">
       <div class="wrap contact__inner">
-        <h2 class="contact__title">Need a Skript dev for your server?</h2>
-        <p >Message me on Discord with what you need and I'll get back to you.</p>
+        <h2 class="contact__title">Need a Skript or Java dev for your server?</h2>
+        <p>Message me on Discord with what you need and I'll get back to you.</p>
         <div class="contact__handle">
           <i class="ph ph-discord-logo" aria-hidden="true"></i>
           <span data-handle>mu3z</span>
