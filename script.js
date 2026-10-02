@@ -417,6 +417,50 @@
     }
   });
 
+  /* Animated profile banner: load the Klipy GIF player only when the card is near the screen
+     and the visitor allows motion. If it never loads, the still banner image stays. */
+  var bannerEl = document.querySelector("[data-banner-player]");
+  var bannerFrame = null;
+  function addBannerPlayer() {
+    if (bannerFrame || reduceMotion.matches) return;
+    bannerFrame = document.createElement("iframe");
+    bannerFrame.src = bannerEl.dataset.bannerPlayer;
+    bannerFrame.title = "Animated profile banner";
+    bannerFrame.tabIndex = -1;
+    bannerFrame.setAttribute("aria-hidden", "true");
+    bannerFrame.setAttribute("scrolling", "no");
+    bannerFrame.setAttribute("referrerpolicy", "no-referrer");
+    bannerFrame.addEventListener("load", function () { if (bannerFrame) bannerFrame.classList.add("is-ready"); });
+    bannerEl.appendChild(bannerFrame);
+  }
+  function tryBannerPlayer() {
+    // A failed iframe still fires "load" (with the browser's error page), so first check
+    // that Klipy is reachable. An opaque no-cors response is enough; a network error is not.
+    if (reduceMotion.matches) return;
+    if (!window.fetch) return addBannerPlayer();
+    fetch(bannerEl.dataset.bannerPlayer, { mode: "no-cors", cache: "force-cache" })
+      .then(addBannerPlayer)
+      .catch(function () {});
+  }
+  function removeBannerPlayer() {
+    if (!bannerFrame) return;
+    bannerFrame.remove();
+    bannerFrame = null;
+  }
+  if (bannerEl) {
+    if ("IntersectionObserver" in window) {
+      var bannerObserver = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        tryBannerPlayer();
+        bannerObserver.disconnect();
+      }, { rootMargin: "400px 0px" });
+      bannerObserver.observe(bannerEl);
+    } else {
+      tryBannerPlayer();
+    }
+    onMediaChange(reduceMotion, function () { reduceMotion.matches ? removeBannerPlayer() : null; });
+  }
+
   /* Live Discord profile via Lanyard (api.lanyard.rest). Only runs when data-discord-id is set on <body>;
      otherwise the card stays as the static version. */
   var discordId = (document.body.dataset.discordId || "").trim();

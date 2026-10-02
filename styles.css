@@ -412,6 +412,14 @@ kbd.key--accent.is-pressed { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(-
   background: repeating-conic-gradient(color-mix(in srgb, var(--accent) 38%, #000) 0 25%, color-mix(in srgb, var(--accent) 24%, #000) 0 50%) 0 0 / 1rem 1rem;
 }
 .profile__banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+/* Animated banner: the Klipy GIF player sits over the still image, scaled to cover, and fades in once loaded. */
+.profile__banner { position: relative; }
+.profile__banner iframe {
+  position: absolute; left: 0; top: 45%; width: 100%; aspect-ratio: 372 / 208; height: auto;
+  transform: translateY(-50%); border: 0; pointer-events: none;
+  opacity: 0; transition: opacity 0.4s var(--ease);
+}
+.profile__banner iframe.is-ready { opacity: 1; }
 .profile__avatar {
   position: absolute; top: 3.5rem; left: 0.625rem; width: 6.25rem; height: 6.25rem;
   background: #050505; border: 6px solid var(--surface); outline: 2px solid var(--edge);
