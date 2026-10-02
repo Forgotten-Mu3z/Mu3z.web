@@ -91,7 +91,7 @@
   var recolorTimer = null;
 
   function syncSwatches() {
-    var current = root.dataset.accent || "green";
+    var current = root.dataset.accent || "diamond";
     swatches.forEach(function (s) {
       var on = s.dataset.accent === current;
       s.setAttribute("aria-checked", on ? "true" : "false");
@@ -179,9 +179,14 @@
   var code = document.querySelector(".code");
   if (code) code.style.setProperty("--d0", Math.round(typeDuration * 0.6) + 400);
   document.querySelectorAll(".bento .tile").forEach(function (tile, i) { tile.style.setProperty("--t", i); });
+  document.querySelectorAll(".section__title, .contact__title").forEach(function (t) { t.classList.add("wipe"); });
+  document.querySelectorAll(".skills__group ul, .tools__list").forEach(function (list) {
+    list.classList.add("stagger");
+    Array.prototype.forEach.call(list.children, function (item, i) { item.style.setProperty("--i", i); });
+  });
 
   function reveal(el) { el.classList.add("is-in"); }
-  var revealEls = document.querySelectorAll(".reveal, .bento");
+  var revealEls = document.querySelectorAll(".reveal, .bento, .stagger, .profile");
   if ("IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -191,8 +196,27 @@
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
     revealEls.forEach(function (el) { revealObserver.observe(el); });
+    // A fully clipped title has no visible area, so watch its parent block instead.
+    var wipeObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var title = entry.target.querySelector(".wipe");
+        if (title) reveal(title);
+        wipeObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0, rootMargin: "0px 0px -15% 0px" });
+    document.querySelectorAll(".wipe").forEach(function (t) { wipeObserver.observe(t.parentElement); });
   } else {
     revealEls.forEach(reveal);
+    document.querySelectorAll(".wipe").forEach(reveal);
+  }
+
+  /* XP orbs only animate while the hero is on screen. */
+  var orbs = document.querySelector(".orbs");
+  if (orbs && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      orbs.classList.toggle("is-paused", !entries[0].isIntersecting);
+    }).observe(document.querySelector(".hero"));
   }
 
   /* Code tabs: Skript and Java versions of the same feature. Lines replay on switch. */
@@ -346,7 +370,26 @@
   handleEl.textContent = handle;
   var resetTimer = null;
 
+  /* Minecraft "Achievement Get!" toast, shown when the username is copied. */
+  var toast = document.querySelector("[data-toast]");
+  var toastTimer = null;
+  function showToast() {
+    if (!toast) return;
+    clearTimeout(toastTimer);
+    toast.classList.remove("is-out");
+    toast.hidden = false;
+    toast.classList.remove("is-in");
+    void toast.offsetWidth; // restart the slide-in when copied twice in a row
+    toast.classList.add("is-in");
+    toastTimer = setTimeout(function () {
+      toast.classList.remove("is-in");
+      toast.classList.add("is-out");
+      toastTimer = setTimeout(function () { toast.hidden = true; toast.classList.remove("is-out"); }, reduceMotion.matches ? 0 : 300);
+    }, 3200);
+  }
+
   function showCopied() {
+    showToast();
     copyBtn.classList.add("is-done");
     copyBtn.querySelector(".ph").className = "ph ph-check";
     copyLabel.textContent = "Copied";
@@ -373,6 +416,56 @@
       showFallback();
     }
   });
+
+  /* Live Discord profile via Lanyard (api.lanyard.rest). Only runs when data-discord-id is set on <body>;
+     otherwise the card stays as the static version. */
+  var discordId = (document.body.dataset.discordId || "").trim();
+  var avatarImg = document.querySelector("[data-avatar]");
+  var statusDot = document.querySelector("[data-status]");
+  var presenceText = document.querySelector("[data-presence-text]");
+  var activityEl = document.querySelector("[data-activity]");
+  var customEl = document.querySelector("[data-custom]");
+  var STATUS_LABEL = { online: "Online", idle: "Idle", dnd: "Do Not Disturb", offline: "Offline" };
+  var ACTIVITY_VERB = { 0: "Playing", 1: "Streaming", 2: "Listening to", 3: "Watching", 5: "Competing in" };
+
+  function renderPresence(d) {
+    var user = d.discord_user || {};
+    if (user.avatar) {
+      var ext = user.avatar.indexOf("a_") === 0 ? "gif" : "png";
+      var src = "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar + "." + ext + "?size=256";
+      if (avatarImg.getAttribute("src") !== src) avatarImg.src = src;
+      avatarImg.hidden = false;
+    }
+    var state = STATUS_LABEL[d.discord_status] ? d.discord_status : "offline";
+    statusDot.dataset.state = state;
+    statusDot.hidden = false;
+    presenceText.textContent = STATUS_LABEL[state];
+
+    var activities = d.activities || [];
+    var custom = activities.filter(function (a) { return a.type === 4; })[0];
+    var text = custom ? [custom.emoji && !custom.emoji.id ? custom.emoji.name : "", custom.state || ""].join(" ").trim() : "";
+    customEl.textContent = text;
+    customEl.hidden = !text;
+
+    var activity = activities.filter(function (a) { return a.type !== 4; })[0];
+    var line = "";
+    if (d.listening_to_spotify && d.spotify) line = "Listening to " + d.spotify.song + " by " + d.spotify.artist.replace(/;/g, ",");
+    else if (activity) line = (ACTIVITY_VERB[activity.type] || "Playing") + " " + activity.name;
+    activityEl.textContent = line;
+    activityEl.hidden = !line;
+  }
+  function loadPresence() {
+    fetch("https://api.lanyard.rest/v1/users/" + discordId)
+      .then(function (res) { return res.json(); })
+      .then(function (json) { if (json && json.success && json.data) renderPresence(json.data); })
+      .catch(function () {});
+  }
+  if (/^\d{17,20}$/.test(discordId) && window.fetch) {
+    avatarImg.addEventListener("error", function () { avatarImg.hidden = true; });
+    loadPresence();
+    setInterval(function () { if (!document.hidden) loadPresence(); }, 30000);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) loadPresence(); });
+  }
 
   var year = document.querySelector("[data-year]");
   if (year) year.textContent = new Date().getFullYear();

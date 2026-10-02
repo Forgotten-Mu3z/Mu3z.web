@@ -6,8 +6,8 @@
   <meta name="color-scheme" content="dark light">
   <title>Mu3z | Skript &amp; Java Developer</title>
   <meta name="description" content="Mu3z is a Skript and Java developer for Minecraft PvP servers, with work for NullifyFFA, EffectsFFA and Rascal PvP, plus Fortnite macros.">
-  <meta name="theme-color" content="#0e1110" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f3f5f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#090c14" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eef2f8" media="(prefers-color-scheme: light)">
   <meta property="og:title" content="Mu3z | Skript &amp; Java Developer">
   <meta property="og:description" content="Skript and Java developer for Minecraft PvP servers. NullifyFFA, EffectsFFA, Rascal PvP.">
   <meta property="og:type" content="website">
@@ -24,11 +24,12 @@
       var t = localStorage.getItem("theme");
       if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
       var a = localStorage.getItem("accent");
-      if (/^(green|blue|purple|orange|red|gold)$/.test(a)) document.documentElement.dataset.accent = a;
+      if (/^(diamond|emerald|amethyst|lapis|redstone|gold|copper)$/.test(a)) document.documentElement.dataset.accent = a;
     } catch (e) {}
   </script>
 </head>
-<body data-discord="_mu3z">
+<!-- data-discord-id: your Discord user ID (Developer Mode > right-click your name > Copy User ID). With it set, the profile card shows your live picture, status and activity via Lanyard (join discord.gg/lanyard once). -->
+<body data-discord="_mu3z" data-discord-id="">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="nav">
@@ -48,12 +49,13 @@
             <i class="ph ph-palette" aria-hidden="true"></i>
           </button>
           <div class="accent-menu" id="accent-menu" role="radiogroup" aria-label="Accent color" hidden>
-            <button type="button" role="radio" class="swatch" data-accent="green" aria-label="Green" style="--sw: #5fd38d"></button>
-            <button type="button" role="radio" class="swatch" data-accent="blue" aria-label="Blue" style="--sw: #6aa8ff"></button>
-            <button type="button" role="radio" class="swatch" data-accent="purple" aria-label="Purple" style="--sw: #b48cff"></button>
-            <button type="button" role="radio" class="swatch" data-accent="orange" aria-label="Orange" style="--sw: #ff9f4a"></button>
-            <button type="button" role="radio" class="swatch" data-accent="red" aria-label="Red" style="--sw: #ff6b81"></button>
-            <button type="button" role="radio" class="swatch" data-accent="gold" aria-label="Gold" style="--sw: #f2c94c"></button>
+            <button type="button" role="radio" class="swatch" data-accent="diamond" aria-label="Diamond" title="Diamond" style="--sw: #4fd6e0"></button>
+            <button type="button" role="radio" class="swatch" data-accent="emerald" aria-label="Emerald" title="Emerald" style="--sw: #3ee08a"></button>
+            <button type="button" role="radio" class="swatch" data-accent="amethyst" aria-label="Amethyst" title="Amethyst" style="--sw: #c08cff"></button>
+            <button type="button" role="radio" class="swatch" data-accent="lapis" aria-label="Lapis" title="Lapis" style="--sw: #6f9dff"></button>
+            <button type="button" role="radio" class="swatch" data-accent="redstone" aria-label="Redstone" title="Redstone" style="--sw: #ff5c6c"></button>
+            <button type="button" role="radio" class="swatch" data-accent="gold" aria-label="Gold" title="Gold" style="--sw: #ffd04d"></button>
+            <button type="button" role="radio" class="swatch" data-accent="copper" aria-label="Copper" title="Copper" style="--sw: #ff9a5a"></button>
           </div>
         </div>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle light and dark mode">
@@ -66,6 +68,7 @@
 
   <main id="main">
     <section class="hero" id="top">
+      <div class="orbs" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
       <div class="wrap hero__grid">
         <div class="hero__copy">
           <h1 class="hero__title" data-type>I code <em>PvP servers.</em></h1>
@@ -208,11 +211,16 @@
         <h2 class="contact__title">Need a Skript or Java dev for your server?</h2>
         <p>Add me on Discord and tell me what you need.</p>
         <article class="profile" aria-label="My Discord profile">
-          <div class="profile__banner" aria-hidden="true"></div>
-          <div class="profile__avatar" aria-hidden="true"></div>
+          <div class="profile__banner" aria-hidden="true"><img src="assets/discord-banner.jpg" alt="" width="296" height="96" decoding="async"></div>
+          <div class="profile__avatar">
+            <img alt="" data-avatar hidden>
+            <span class="profile__status" data-status hidden></span>
+          </div>
+          <p class="profile__bubble" data-custom hidden></p>
           <div class="profile__body">
             <p class="profile__name" data-handle>_mu3z</p>
-            <p class="profile__app"><i class="ph ph-discord-logo" aria-hidden="true"></i>Discord</p>
+            <p class="profile__app" data-presence><i class="ph ph-discord-logo" aria-hidden="true"></i><span data-presence-text>Discord</span></p>
+            <p class="profile__activity" data-activity hidden></p>
             <div class="profile__about">
               <h3>About me</h3>
               <p>Manager/developer of Effects ffa
@@ -242,6 +250,11 @@ CODER</p>
       <a href="#top">Back to top</a>
     </div>
   </footer>
+
+  <div class="toast" data-toast aria-hidden="true" hidden>
+    <span class="toast__icon"><i class="ph ph-discord-logo"></i></span>
+    <span class="toast__text"><strong>Achievement Get!</strong><span>Username copied</span></span>
+  </div>
 
   <script src="script.js" defer></script>
 </body>
