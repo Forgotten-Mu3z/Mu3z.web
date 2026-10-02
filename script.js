@@ -417,41 +417,6 @@
     }
   });
 
-  /* Animated profile banner: Klipy's embed player for the owner's GIF, added once the card is near
-     the screen and only when the visitor allows motion. It matches Klipy's own embed code. */
-  var bannerEl = document.querySelector("[data-banner-player]");
-  var bannerFrame = null;
-  function addBannerPlayer() {
-    if (bannerFrame || reduceMotion.matches) return;
-    bannerFrame = document.createElement("iframe");
-    bannerFrame.src = bannerEl.dataset.bannerPlayer;
-    bannerFrame.title = "Animated profile banner";
-    bannerFrame.tabIndex = -1;
-    bannerFrame.setAttribute("aria-hidden", "true");
-    bannerFrame.setAttribute("frameborder", "0");
-    bannerFrame.setAttribute("allowfullscreen", "");
-    bannerFrame.addEventListener("load", function () { if (bannerFrame) bannerFrame.classList.add("is-ready"); });
-    bannerEl.appendChild(bannerFrame);
-  }
-  function removeBannerPlayer() {
-    if (!bannerFrame) return;
-    bannerFrame.remove();
-    bannerFrame = null;
-  }
-  if (bannerEl) {
-    if ("IntersectionObserver" in window) {
-      var bannerObserver = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
-        addBannerPlayer();
-        bannerObserver.disconnect();
-      }, { rootMargin: "600px 0px" });
-      bannerObserver.observe(bannerEl);
-    } else {
-      addBannerPlayer();
-    }
-    onMediaChange(reduceMotion, function () { if (reduceMotion.matches) removeBannerPlayer(); });
-  }
-
   /* Live Discord profile via Lanyard (api.lanyard.rest). Only runs when data-discord-id is set on <body>;
      otherwise the card stays as the static version. */
   var discordId = (document.body.dataset.discordId || "").trim();
