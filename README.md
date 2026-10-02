@@ -1,6 +1,6 @@
 # Mu3z.web
 
-Personal site for Mu3z: Skript developer for Minecraft PvP servers (NullifyFFA, EffectsFFA, Rascal PvP) and Fortnite macros.
+Personal site for Mu3z: Skript and Java developer for Minecraft PvP servers (NullifyFFA, EffectsFFA, Rascal PvP) and Fortnite macros.
 
 Plain HTML, CSS and JavaScript. No build step.
 
@@ -22,4 +22,4 @@ python3 -m http.server 8000
 
 Repo Settings > Pages > Source: "Deploy from a branch", pick the branch and `/ (root)`.
 
-Fonts: Bricolage Grotesque, JetBrains Mono and Geist Pixel (SIL Open Font License). Icons: Phosphor Icons (MIT).
+Fonts: Monocraft and Pixelify Sans (SIL Open Font License). Icons: Phosphor Icons (MIT).

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
   <title>Mu3z | Skript &amp; Java Developer</title>
   <meta name="description" content="Mu3z is a Skript and Java developer for Minecraft PvP servers, with work for NullifyFFA, EffectsFFA and Rascal PvP, plus Fortnite macros.">
   <meta name="theme-color" content="#0e1110" media="(prefers-color-scheme: dark)">
@@ -11,12 +12,14 @@
   <meta property="og:description" content="Skript and Java developer for Minecraft PvP servers. NullifyFFA, EffectsFFA, Rascal PvP.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/Monocraft-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/PixelifySans-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/icons/style.css">
   <link rel="stylesheet" href="styles.css">
   <script>
-    // Apply a saved theme and accent color before first paint to avoid a flash.
+    // Mark JS as available and apply the saved theme and accent before first paint to avoid a flash.
+    document.documentElement.classList.add("js");
     try {
       var t = localStorage.getItem("theme");
       if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
@@ -25,19 +28,22 @@
     } catch (e) {}
   </script>
 </head>
-<body data-discord="mu3z">
+<body data-discord="_mu3z">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="nav">
     <div class="wrap nav__inner">
       <a class="logo" href="#top" aria-label="Mu3z, back to top">Mu3z</a>
-      <nav class="nav__links" aria-label="Sections">
+      <nav class="nav__links" id="nav-links" aria-label="Sections">
         <a href="#servers">Servers</a>
         <a href="#skills">Skills</a>
         <a href="#macros">Macros</a>
       </nav>
       <div class="nav__actions">
-        <div class="accent-picker">
+        <button class="icon-btn menu-btn js-only" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <i class="ph ph-list" aria-hidden="true"></i>
+        </button>
+        <div class="accent-picker js-only">
           <button class="icon-btn" type="button" data-accent-toggle aria-expanded="false" aria-controls="accent-menu" aria-label="Change accent color">
             <i class="ph ph-palette" aria-hidden="true"></i>
           </button>
@@ -62,7 +68,7 @@
     <section class="hero" id="top">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 class="hero__title reveal">I code <em>PvP servers.</em></h1>
+          <h1 class="hero__title" data-type>I code <em>PvP servers.</em></h1>
           <p class="hero__sub reveal">Skript and Java developer for NullifyFFA, EffectsFFA and Rascal PvP. Arenas, kits, stats and staff tools.</p>
           <div class="hero__ctas reveal">
             <a class="btn btn--primary" href="#contact"><i class="ph ph-discord-logo" aria-hidden="true"></i>Message me</a>
@@ -123,7 +129,7 @@
           <article class="tile tile--feature">
             <div class="mark" aria-hidden="true">N</div>
             <div class="tile__body">
-              <ul class="tags" aria-label="Languages"><li>Java</li><li>Skript</li></ul>
+              <ul class="tags" aria-label="Role and languages"><li>Java</li><li>Skript</li></ul>
               <h3>NullifyFFA</h3>
               <p>Java and Skript developer on a live FFA server. Plugins, gameplay scripts, arena logic and fixes shipped while players were online.</p>
             </div>
@@ -132,15 +138,15 @@
           <article class="tile tile--pattern">
             <div class="mark" aria-hidden="true">E</div>
             <div class="tile__body">
-              <ul class="tags" aria-label="Languages"><li>Java</li><li>Skript</li></ul>
+              <ul class="tags" aria-label="Role and languages"><li class="tag--role">Manager</li><li class="tag--role">Developer</li><li>Java</li><li>Skript</li></ul>
               <h3>EffectsFFA</h3>
-              <p>Java and Skript for effect-based FFA gameplay, kits and the commands that hold them together.</p>
+              <p>Manager and developer at the same time: helped run the server while building its effect-based gameplay, kits and commands in Java and Skript.</p>
             </div>
           </article>
           <article class="tile tile--plain">
             <div class="mark" aria-hidden="true">R</div>
             <div class="tile__body">
-              <ul class="tags" aria-label="Languages"><li>Skript</li></ul>
+              <ul class="tags" aria-label="Role and languages"><li>Skript</li></ul>
               <h3>Rascal PvP</h3>
               <p>PvP systems, stat tracking and quality-of-life features for players and staff.</p>
             </div>
@@ -187,9 +193,12 @@
           <h2 class="section__title">I also build Fortnite macros.</h2>
           <p>Edit and build binds tuned for timing and consistency, set up around your own keyboard and mouse.</p>
         </div>
-        <div class="keys" aria-label="Example key binds">
-          <kbd>F</kbd><kbd>G</kbd><kbd class="key--accent">Q</kbd><kbd>E</kbd>
-          <kbd class="key--wide">Shift</kbd><kbd>Mouse 4</kbd><kbd class="key--accent">Mouse 5</kbd>
+        <div class="keys-wrap">
+          <div class="keys" aria-label="Example key binds">
+            <kbd data-key="f">F</kbd><kbd data-key="g">G</kbd><kbd class="key--accent" data-key="q">Q</kbd><kbd data-key="e">E</kbd>
+            <kbd class="key--wide" data-key="shift">Shift</kbd><kbd data-key="mouse4">Mouse 4</kbd><kbd class="key--accent" data-key="mouse5">Mouse 5</kbd>
+          </div>
+          <p class="keys__hint js-only">Try it: press F, G, Q, E or Shift, tap a key, or press a button on a controller.</p>
         </div>
       </div>
     </section>
@@ -200,8 +209,8 @@
         <p>Message me on Discord with what you need and I'll get back to you.</p>
         <div class="contact__handle">
           <i class="ph ph-discord-logo" aria-hidden="true"></i>
-          <span data-handle>mu3z</span>
-          <button class="btn btn--primary" type="button" data-copy>
+          <span data-handle>_mu3z</span>
+          <button class="btn btn--primary js-only" type="button" data-copy>
             <i class="ph ph-copy" aria-hidden="true"></i><span data-copy-label>Copy username</span>
           </button>
         </div>
