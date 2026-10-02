@@ -22,4 +22,4 @@ python3 -m http.server 8000
 
 Repo Settings > Pages > Source: "Deploy from a branch", pick the branch and `/ (root)`.
 
-Fonts: Geist by Vercel (SIL Open Font License). Icons: Phosphor Icons (MIT).
+Fonts: Bricolage Grotesque, JetBrains Mono and Geist Pixel (SIL Open Font License). Icons: Phosphor Icons (MIT).

@@ -29,7 +29,7 @@
   document.querySelectorAll(".code .ln").forEach(function (line, i) {
     line.style.setProperty("--l", i);
   });
-  document.querySelectorAll(".hero__copy, .bento, .skills__groups, .macros__grid, .contact__inner").forEach(function (group) {
+  document.querySelectorAll(".hero__grid").forEach(function (group) {
     group.querySelectorAll(".reveal").forEach(function (el, i) {
       el.style.setProperty("--i", i);
     });
