@@ -16,7 +16,7 @@ Skills that have been useful here: `anthropic-skills:taste-skill` (design rules 
 
 ## What this is
 
-A one-page personal portfolio for Mu3z: Skript and Java developer for Minecraft PvP servers (NullifyFFA, EffectsFFA, Rascal PvP), plus Fortnite macros. Plain HTML, CSS and JavaScript with no build step, no package.json and no tests. Intended for GitHub Pages (branch root).
+A one-page personal portfolio for Mu3z: Skript and Java developer for Minecraft PvP servers (EffectsFFA, Rascal PvP), plus Fortnite macros. Plain HTML, CSS and JavaScript with no build step, no package.json and no tests. Intended for GitHub Pages (branch root).
 
 ## Commands
 
@@ -41,4 +41,4 @@ Visual checks are done with Playwright against the local server. In the cloud co
 - No em dashes or en dashes anywhere in visible text.
 - Minecraft look: square corners everywhere (`--radius: 0`), raised controls use the dark-outline plus light/dark bevel pattern, headings use the Minecraft drop shadow (`text-shadow` with `--text-shadow` / `--accent-shadow`). One accent color at a time. No eyebrow labels above headings.
 - Motion: typed headline, hero and code-line reveal, server tiles arriving as a list, theme circle reveal, accent recolor fade, button/keycap press feedback. Every animation has a `prefers-reduced-motion` path. Hover effects sit behind `(hover: hover) and (pointer: fine)`; touch targets are at least 44px under `(pointer: coarse)`.
-- Confirmed by the owner: Java and Skript on NullifyFFA and EffectsFFA, Skript on Rascal PvP (a former role, "used to be Dev"), manager and developer at EffectsFFA, Discord `_mu3z`. The contact section's Discord-style profile card quotes the owner's real Discord bio verbatim; keep its wording as is. The rest of the server descriptions, the tools list and the example code are placeholder copy the owner may replace.
+- Confirmed by the owner: the owner never worked at NullifyFFA, so don't mention it anywhere. Java and Skript on EffectsFFA, Skript on Rascal PvP (a former role, "used to be Dev"), manager and developer at EffectsFFA, Discord `_mu3z`. The contact section's Discord-style profile card quotes the owner's real Discord bio verbatim; keep its wording as is. The rest of the server descriptions, the tools list and the example code are placeholder copy the owner may replace.

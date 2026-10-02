@@ -1,6 +1,6 @@
 # Mu3z.web
 
-Personal site for Mu3z: Skript and Java developer for Minecraft PvP servers (NullifyFFA, EffectsFFA, Rascal PvP) and Fortnite macros.
+Personal site for Mu3z: Skript and Java developer for Minecraft PvP servers (EffectsFFA, Rascal PvP) and Fortnite macros.
 
 Plain HTML, CSS and JavaScript. No build step.
 

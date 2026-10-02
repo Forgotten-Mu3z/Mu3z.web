@@ -296,10 +296,10 @@ html:not(.js) .js-only { display: none !important; }
 .section { padding: 7rem 0; }
 .section__title { font-size: clamp(1.75rem, 3.4vw, 2.625rem); max-width: 20ch; }
 
-/* Servers bento: 3 items, 3 cells */
+/* Servers: 2 items, 2 cells */
 .bento {
   margin-top: 3rem;
-  display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 1rem;
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem;
 }
 .tile {
   position: relative; overflow: hidden;
@@ -311,8 +311,9 @@ html:not(.js) .js-only { display: none !important; }
 .tile > * { position: relative; }
 .tile h3 { font-size: 1.5rem; }
 .tile p { margin-top: 0.625rem; color: var(--muted); max-width: 44ch; }
+.tile--pattern { justify-content: space-between; }
 .tile--feature {
-  grid-row: span 2; justify-content: space-between; min-height: 26rem;
+  justify-content: space-between; min-height: 24rem;
   background:
     radial-gradient(120% 90% at 100% 0%, var(--accent-soft), transparent 60%),
     var(--surface);
@@ -330,7 +331,6 @@ html:not(.js) .js-only { display: none !important; }
   -webkit-mask-image: linear-gradient(200deg, #000, transparent 70%);
   mask-image: linear-gradient(200deg, #000, transparent 70%);
 }
-.tile--plain { background: var(--surface-2); }
 .mark {
   width: 3.25rem; height: 3.25rem; display: grid; place-items: center;
   background: var(--accent); color: var(--accent-ink);
@@ -652,7 +652,7 @@ kbd.key--accent.is-pressed { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(-
   .hero { padding: 3rem 0 3.5rem; }
   .section { padding: 4.5rem 0; }
   .bento { grid-template-columns: 1fr; }
-  .tile--feature { grid-row: auto; min-height: 20rem; }
+  .tile--feature { min-height: 20rem; }
   .skills__groups { grid-template-columns: 1fr; }
   .code__body { font-size: 0.75rem; }
   kbd { min-width: 3.25rem; height: 3.25rem; padding: 0 0.875rem; font-size: 0.875rem; }
