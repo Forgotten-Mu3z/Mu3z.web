@@ -1,0 +1,45 @@
+name: Check live site
+
+# Run by hand from the Actions tab (or by Claude) to test the deployed site in a real browser.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find the Klipy GIF file
+        run: |
+          curl -sSL -A "Mozilla/5.0" https://klipy.com/gifs/rust-ron -o page.html || true
+          curl -sSL -A "Mozilla/5.0" https://klipy.com/gifs/rust-ron/player -o player.html || true
+          echo "page bytes: $(wc -c < page.html)  player bytes: $(wc -c < player.html)"
+          echo "--- media URLs ---"
+          cat page.html player.html | grep -oE 'https?://[^"'"'"' <>]+\.(gif|webp|mp4|webm)[^"'"'"' <>]*' | sort -u | head -40
+          echo "--- og tags ---"
+          grep -oE '<meta[^>]+og:(image|video)[^>]*>' page.html | head
+          echo "--- player head ---"
+          head -c 1500 player.html; echo
+          echo "--- player response headers ---"
+          curl -sSI -A "Mozilla/5.0" https://klipy.com/gifs/rust-ron/player | grep -iE 'HTTP/|x-frame-options|content-security-policy|content-type' || true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install browser
+        run: |
+          npm init -y >/dev/null
+          npm i playwright@1 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+      - name: Check the banner on the live site
+        run: node .github/check/banner.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: banner-check
+          path: |
+            shots/
+            page.html
+            player.html
