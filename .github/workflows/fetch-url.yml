@@ -1,0 +1,24 @@
+name: Fetch URL
+
+# Run by hand (or by Claude) to read a web page that the cloud dev container can't reach.
+# Prints the page to the job log; changes nothing.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: URL to fetch
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          echo "Fetching $URL"
+          curl -sSL --max-time 60 -A "Mozilla/5.0" -w "\n---HTTP %{http_code}\n" -- "$URL"
