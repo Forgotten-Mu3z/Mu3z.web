@@ -23,3 +23,7 @@ python3 -m http.server 8000
 Repo Settings > Pages > Source: "Deploy from a branch", pick the branch and `/ (root)`.
 
 Fonts: Monocraft and Pixelify Sans (SIL Open Font License). Icons: Phosphor Icons (MIT).
+
+## Publish on Cloudflare
+
+Connect the repo in Cloudflare (Workers & Pages > Create > Import a repository). Leave the build command empty and keep the deploy command `npx wrangler deploy`; `wrangler.jsonc` copies the site files into `dist/` and serves them as static assets.

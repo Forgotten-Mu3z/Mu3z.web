@@ -1,0 +1,14 @@
+// Cloudflare Workers config: serves the site as static files (no Worker script needed).
+// Cloudflare's Git integration runs `npx wrangler deploy`, which reads this file,
+// copies only the site files into dist/ and publishes that folder.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mu3z-web",
+  "compatibility_date": "2026-10-01",
+  "build": {
+    "command": "rm -rf dist && mkdir dist && cp -r index.html styles.css script.js assets dist/"
+  },
+  "assets": {
+    "directory": "dist"
+  }
+}
